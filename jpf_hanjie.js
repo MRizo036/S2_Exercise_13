@@ -57,6 +57,7 @@
 window.onload = init;
 
 var puzzleCells;
+var cellBackground;
 
 function init() {
       //Insert the title for the first puzzle
@@ -97,6 +98,9 @@ function swapPuzzle(e) {
       setupPuzzle();
 }
 
+//Add an event listener for a mouseup event 
+document.addEventListener("mouseup", endBackground);
+
 function setupPuzzle() {
       //Match all of the data cells in the puzzle
       puzzleCells = document.querySelectorAll("table#hanjieGrid td");
@@ -104,11 +108,35 @@ function setupPuzzle() {
       //Set the initial color of each cell to gold
       for (var i = 0; i < puzzleCells.length; i++) {
             puzzleCells[i].style.backgroundColor = "rgb(233, 207, 29)";
+
+            //Set the cell background color in response to the mouse down event
+            puzzleCells[i].onmousedown = setBackground;
       }
 }
 
+function setBackground(e) {
+      cellBackground = "rgb(101, 101, 101)";
+      e.target.style.backgroundColor = cellBackground;
 
+      //Create an event listener for every puzzle cell
+      for (var i = 0; i < puzzleCells.length; i++) {
+            puzzleCells[i].addEventListener("mouseenter", extendBackground);
+      }
+}
 
+//Create a function to extend the background and set a new background color
+function extendBackground(e) {
+      e.target.style.backgroundColor = cellBackground;
+}
+
+function endBackground() {
+      //Remove the event listener for every puzzle cell
+      for (var i = 0; i < puzzleCells.length; i++) {
+            puzzleCells[i].removeEventListener("mouseenter", extendBackground);
+            s
+
+      }
+}
 
 /* ================================================================= */
 
